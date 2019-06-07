@@ -450,6 +450,9 @@ class APIResourceWrapper(Resource):
 
         request.setHeader(b'Content-Language', request.language)
 
+        # avoid connection reuse reducing possibilities of memory leaks and failures
+        request.setHeader(b'Connection', b'close')
+
         # to reduce possibility for XSS attacks.
         request.setHeader(b'X-Content-Type-Options', b'nosniff')
         request.setHeader(b'X-XSS-Protection', b'1; mode=block')
